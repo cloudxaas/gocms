@@ -51,9 +51,15 @@ func main() {
 		},
 		func(cmd resp.Command, out []byte) ([]byte, redhub.Action) {
 			var status redhub.Action
+			if len(cmd.Args) == 1 { //"compressed" data is faster
+				//here is the default in/out of what we will use
+				out = resp.AppendError(out, "ERR unknown command '"+string(cmd.Args[0])+"'")
+				return out, status
+			}
+
+			//old school
 			switch strings.ToLower(string(cmd.Args[0])) {
 			default:
-				out = resp.AppendError(out, "ERR unknown command '"+string(cmd.Args[0])+"'")
 			case "ping":
 				out = resp.AppendString(out, "PONG")
 			case "quit":
