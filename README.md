@@ -1,3 +1,3 @@
 # gocms
 
-"WordPress" CMS rewritten in golang
+"WordPress" CMS server rewritten in golang
