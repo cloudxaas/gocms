@@ -37,20 +37,20 @@ func main() {
 	}
 
 	protoAddr := fmt.Sprintf("%s://%s", network, addr)
-	option := redhub.Options{
+	option := redex.Options{
 		Multicore: multicore,
 		ReusePort: reusePort,
 	}
 
-	rh := redhub.NewRedHub(
-		func(c *redhub.Conn) (out []byte, action redhub.Action) {
+	rh := redex.NewRedHub(
+		func(c *redex.Conn) (out []byte, action redex.Action) {
 			return
 		},
-		func(c *redhub.Conn, err error) (action redhub.Action) {
+		func(c *redex.Conn, err error) (action redex.Action) {
 			return
 		},
-		func(cmd resp.Command, out []byte) ([]byte, redhub.Action) {
-			var status redhub.Action
+		func(cmd resp.Command, out []byte) ([]byte, redex.Action) {
+			var status redex.Action
 			if len(cmd.Args) == 1 { //"compressed" data is faster
 				//here is the default in/out of what we will use
 				out = resp.AppendError(out, "ERR unknown command '"+string(cmd.Args[0])+"'")
@@ -64,7 +64,7 @@ func main() {
 				out = resp.AppendString(out, "PONG")
 			case "quit":
 				out = resp.AppendString(out, "OK")
-				status = redhub.Close
+				status = redex.Close
 			case "set":
 				if len(cmd.Args) != 3 {
 					out = resp.AppendError(out, "ERR wrong number of arguments for '"+string(cmd.Args[0])+"' command")
@@ -111,8 +111,8 @@ func main() {
 			return out, status
 		},
 	)
-	log.Printf("started redhub server at %s", addr)
-	err := redhub.ListendAndServe(protoAddr, option, rh)
+	log.Printf("started redex server at %s", addr)
+	err := redex.ListendAndServe(protoAddr, option, rh)
 	if err != nil {
 		log.Fatal(err)
 	}
