@@ -1,3 +1,17 @@
+Tired of PHP, Python or Wordpress? So am I. I've been "developing" in WordPress for 15 years and I can tell you it's time to stop doing PHP and WordPress in 2020s.
+
+GoCMS will be made available soon as an alternative to WordPress in golang.
+Rewriting future proof CMS for modern frameworks.
+
+Philosophy:
+1. Security
+2. Reliability & Stability (using unsafe is ok)
+3. Performance
+
+In the order above.
+
+Most standard modules / functions are to be added as cloudxaas repo.
+
 # Standard Go Project Layout
 
 Translations:
